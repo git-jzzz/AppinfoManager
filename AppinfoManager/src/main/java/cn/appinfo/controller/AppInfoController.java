@@ -224,7 +224,6 @@ public class AppInfoController {
 	/**
 	 * 依据ID查询APP详情
 	 * @param id
-	 * @param request
 	 * @param i
 	 * @return
 	 */
@@ -262,9 +261,9 @@ public class AppInfoController {
 	 * @param appId
 	 * @return
 	 */
-	@RequestMapping(value="/deleteAppinfo.html")
+	@RequestMapping(value="/deleteAppinfo")
 	@ResponseBody
-	public Object deleteAppinfo(String appId){
+		public Object deleteAppinfo(String appId){
 		Map<String, String> map=new HashMap<String,String>();
 		if(appVersionService.selectCount(Integer.parseInt(appId))>0){
 			appVersionService.deleteVersion(Integer.parseInt(appId));
@@ -272,7 +271,7 @@ public class AppInfoController {
 		map.put("result", appInfoService.deleteAppinfo(Integer.parseInt(appId))>0?"success":"lose");
 		return  JSONArray.toJSONString(map);
 	}
-	
+
 	/**
 	 * 修改app状态操作
 	 * @param id

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <!--
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    -->
+    <link rel="stylesheet" href="../../statics/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../statics/layuiadmin/style/admin.css" media="all">
+    <script src="../../statics/layuiadmin/layui/layui.js"></script>
+    <script type="text/javascript" src="../../statics/js/jquery-1.8.3.js">
+
+    </script>
+    <style type="text/css">
+        .layui-input{
+            width:500px;
+        }
+    </style>
+</head>
+<body>
+<h2>修改APP最新版本信息
+</h2><br/><br/>
+<h2>历史版本信息</h2>
+<table class="layui-hide" id="demo" lay-filter="test"></table>
+<h2>
+    修改最新版本信息
+</h2>
+
+<form style="margin-left: 15%" class="layui-form" lay-filter="example" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">版本号*</label>
+        <div class="layui-input-block">
+            <input type="text" name="versionNo"
+                   readonly="readonly"
+                   value="" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">版本大小*</label>
+        <div class="layui-input-block">
+            <input type="text" name="versionSize" value="" lay-verify="num" lay-reqtext="必填项!"
+                   placeholder="请输入软件大小,单位为MB" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">发布状态*</label>
+        <input value="3" name="publishStatus" value="" lay-verify="num" type="hidden" autocomplete="off"
+               class="layui-input">
+        预发布
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">版本简介*</label>
+        <div class="layui-input-block">
+            <textarea name="versionInfo" style="width: 500px;" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">apk文件*</label>
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn layui-btn-primary" id="apkupload"><i class="layui-icon"></i>浏览
+            </button>
+            <span id="src5"></span>
+
+            <button id="link" type="button" class="layui-btn"><i class="layui-icon"></i></button>
+
+            <button id="del" type="button" class="layui-btn"><i class="layui-icon"></i></button>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+            <a href="JavaScript:history.back(-1)" class="layui-btn">返回</a>
+        </div>
+    </div>
+
+    <input type="hidden" name="id" value=""/>
+
+    <input type="hidden" name="appId"/>
+    <input type="hidden" name="downloadLink" id="src1"/>
+    <input type="hidden" name="apkLocPath" id="src2"/>
+    <input type="hidden" name="apkFileName" id="src3"/>
+</form>
+
+
+</body>
+<script src="../../statics/js/common.js"></script>
+<script src="../../statics/js/dev/appversionupdate.js"></script>
+<link rel="stylesheet" type="text/css" href="../../statics/css/table.css">
+</html>
