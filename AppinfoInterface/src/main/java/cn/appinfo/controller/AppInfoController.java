@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import cn.appinfo.util.Result;
 import cn.appinfo.util.TableData;
@@ -48,11 +49,27 @@ public class AppInfoController {
     @Autowired
     private DataDictionaryService dataDictionaryService;
 
-    /*applist*/
-    @RequestMapping(value = "/list")
+    @Autowired
+    private HttpServletRequest request;
+
+
+    @RequestMapping(value = "/dev_auth", method = RequestMethod.GET)
     @ResponseBody
-    public TableData getAppInfoByCondition(@RequestParam(required = false) String softwareName, @RequestParam(required = false) String status, @RequestParam(required = false) String flatformId, @RequestParam(required = false) String categoryLevel1, @RequestParam(required = false) String categoryLevel2,
-                                           @RequestParam(required = false) String categoryLevel3, HttpServletRequest request, @RequestParam(defaultValue = "1") String page, @RequestParam(required = false, defaultValue = "5") String limit) {
+    public Result dev_auth() {
+        return Result.ok();
+    }
+
+    private String reload() {
+        return request.getAttribute("reloadToken") != null ? request.getAttribute("reloadToken").toString() : null;
+    }
+
+
+    /*applist*/
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @ResponseBody
+    public TableData getAppInfoByCondition(@RequestParam(name = "softwareName",required = false) String softwareName, @RequestParam(name = "status",required = false) String status, @RequestParam(required = false) String flatformId, @RequestParam(required = false) String categoryLevel1, @RequestParam(required = false) String categoryLevel2,
+                                           @RequestParam(required = false) String categoryLevel3, HttpServletRequest request, @RequestParam(defaultValue = "1") String page, @RequestParam(required = false, defaultValue = "5") String limit, HttpServletResponse response) {
+
         AppInfo appinfo = new AppInfo();
         appinfo.setSoftwareName(softwareName);
         appinfo.setStatus(status == null || status.equals("") ? null : Integer.parseInt(status));
@@ -69,10 +86,11 @@ public class AppInfoController {
         data.setData(appInfoService.getAppInfoByCondition(appinfo, (Integer.parseInt(page) - 1) * Integer.parseInt(limit), Integer.parseInt(limit)));
 
         data.setCode(0);
+        if (reload() != null) {
+            response.addHeader("reloadToken", reload());
+        }
         return data;
     }
-
-
     /**
      * 查询分类列表
      *
@@ -83,7 +101,7 @@ public class AppInfoController {
     public Result getCategoryListByParentId(String parentId) {
         Integer pid = parentId == null || parentId.equals("0") ? 0 : Integer.parseInt(parentId);
         List<AppCategory> clist = appCategoryService.getCategoryListByParentId(pid);
-        return Result.ok(clist);
+        return reload()==null? Result.ok(clist):Result.ok(clist, reload());
     }
 
 
@@ -96,7 +114,7 @@ public class AppInfoController {
     @ResponseBody
     public Result getDateDictionaryList(String typeCode) {
         List<DataDictionary> dlist = dataDictionaryService.getDataDictionaryList(typeCode);
-        return Result.ok(dlist);
+        return reload()==null? Result.ok(dlist):Result.ok(dlist, reload());
     }
 
 
@@ -135,8 +153,7 @@ public class AppInfoController {
         map2.put("src1", src1);//URL地址
         map2.put("src2", src2);//tomcat上传地址
         map.put("data", map2);
-
-        return Result.ok(map);
+        return reload()==null? Result.ok(map):Result.ok(map,reload());
     }
 
 
@@ -151,7 +168,7 @@ public class AppInfoController {
     public Result findByAPKName(String aPKName) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("result", appInfoService.findByAPKName(aPKName) > 0 ? "exits" : "noexits");
-        return Result.ok(map);
+        return reload()==null? Result.ok(map):Result.ok(map,reload());
     }
 
     /**
@@ -168,7 +185,7 @@ public class AppInfoController {
         int result = appInfoService.addAppinfo(appinfo);
         Map<String, String> map = new HashMap<String, String>();
         map.put("result", result > 0 ? "success" : "lose");
-        return Result.ok(map);
+        return reload()==null? Result.ok(map):Result.ok(map, reload());
 
     }
 
@@ -188,7 +205,7 @@ public class AppInfoController {
         if (versionId != null) {
             map.put("version", appVersionService.getVersionByid(Integer.parseInt(versionId)));
         }
-        return Result.ok(map);
+        return reload()==null? Result.ok(map):Result.ok(map, reload());
     }
 
 
@@ -206,7 +223,7 @@ public class AppInfoController {
         int result = appInfoService.updateAppinfo(appinfo);
         Map<String, String> map = new HashMap<String, String>();
         map.put("result", result > 0 ? "success" : "lose");
-        return Result.ok(map);
+        return reload()==null? Result.ok(map):Result.ok(map, reload());
     }
 
 
@@ -224,7 +241,7 @@ public class AppInfoController {
             appVersionService.deleteVersion(Integer.parseInt(appId));
         }
         map.put("result", appInfoService.deleteAppinfo(Integer.parseInt(appId)) > 0 ? "success" : "lose");
-        return Result.ok(map);
+        return reload()==null? Result.ok(map):Result.ok(map, reload());
     }
 
     /**
@@ -239,7 +256,7 @@ public class AppInfoController {
     public Result setStatus(String id, String status) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("result", appInfoService.setStatus(Integer.parseInt(id), Integer.parseInt(status)) > 0 ? "success" : "lose");
-        return Result.ok(map);
+        return reload()==null? Result.ok(map):Result.ok(map, reload());
     }
 
     /**
@@ -260,6 +277,6 @@ public class AppInfoController {
         } else {
             map.put("result", "lose2");
         }
-        return Result.ok(map);
+        return reload()==null? Result.ok(map):Result.ok(map, reload());
     }
 }

@@ -32,15 +32,21 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/view/dev" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/statics/layuiadmin/layui" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/statics/layuiadmin/layui/lay/modules/tables.js" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoWeb\view\dev" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoWeb\statics\layuiadmin\layui" />
       <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoWeb\view\admin" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoWeb\statics\layuiadmin\layui" />
+      <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoWeb\statics\layuiadmin\layui\lay\modules" />
+      <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoWeb\statics\js\dev" />
+      <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoWeb\statics\lib\layui\lay\modules" />
+      <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoWeb\statics\lib\layui" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -68,7 +74,8 @@
       <workItem from="1588843180681" duration="23067000" />
       <workItem from="1589176824831" duration="8684000" />
       <workItem from="1589243634811" duration="7112000" />
-      <workItem from="1589266101823" duration="7698000" />
+      <workItem from="1589266101823" duration="9083000" />
+      <workItem from="1589350528910" duration="65309000" />
     </task>
     <servers />
   </component>

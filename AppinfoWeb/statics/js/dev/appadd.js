@@ -1,20 +1,4 @@
-$(function () {
-    var isTrue = true;
-    //重名验证
-    $("[name=aPKName]").blur(function () {
-        if ($(this).val() != "") {
-            $.getJSON(serverUrl + "/sys/findbyapkname", "aPKName=" + $(this).val(), function (data) {
-                if (data.data.result == "exits") {
-                    layer.msg("APK名称已存在,不可使用~");
-                    isTrue = false;
-                } else {
-                    layer.msg("APK名称可用~");
-                    isTrue = true;
-                }
-            })
-        }
-    })
-})
+
 
 layui.use('upload', function () {
     var $ = layui.jquery
@@ -61,30 +45,42 @@ layui.config({
     base: '../../statics/layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
-}).use(['index', 'table', 'form'], function () {
+}).use(['index', 'table', 'form','jquery'], function () {
     var table = layui.table;
     form = layui.form;
-
+    $=layui.$;
 
     //获取下拉框
-    $.getJSON(serverUrl + "/sys/datedictionlist", function (datas) {
-        for (var i = 0; i < datas.data.length; i++) {
-            var item = datas.data[i];
-            if (item.typeCode == "APP_STATUS") {
-                $("[name=status]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
-            } else if (item.typeCode == "APP_FLATFORM") {
-                $("[name=flatformId]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
+    $.ajax({
+        type: "GET",
+        url:serverUrl + "/sys/datedictionlist" ,
+        dataType:"json",
+        success: function (datas) {
+            register_dev(datas.code);
+            for (var i = 0; i < datas.data.length; i++) {
+                var item = datas.data[i];
+                if (item.typeCode == "APP_STATUS") {
+                    $("[name=status]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
+                } else if (item.typeCode == "APP_FLATFORM") {
+                    $("[name=flatformId]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
+                }
             }
+            form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
         }
-        form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
-    })
+    });
+    $.ajax({
+        type: "GET",
+        url:serverUrl + "/sys/categoryList" ,
+        dataType:"json",
+        success: function (data) {
+            register_dev(data.code);
+            for (var i = 0; i < data.data.length; i++) {
+                $("[name=categoryLevel1]").append("<option value=" + data.data[i].id + ">" + data.data[i].categoryName + "</option>");
+            }
+            form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
+        }
+    });
 
-    $.getJSON(serverUrl + "/sys/categoryList", function (data) {
-        for (var i = 0; i < data.data.length; i++) {
-            $("[name=categoryLevel1]").append("<option value=" + data.data[i].id + ">" + data.data[i].categoryName + "</option>");
-        }
-        form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
-    })
 
     //三级分类
     form.on('select(c1)', function (data) {
@@ -93,20 +89,51 @@ layui.config({
         } else {
             $("[name=categoryLevel2]").html("");
         }
+        $.ajax({
+            type: "GET",
+            url:serverUrl + "categoryList" ,
+            data:{"parentId": data.value },
+            dataType:"json",
+            success: function (datas) {
+                register_dev(datas.code);
+                for (var i = 0; i < datas.data.length; i++) {
+                    if (data.value > 2) {
+                        $("[name=categoryLevel3]").append("<option value=" + datas.data[i].id + ">" + datas.data[i].categoryName + "</option>");
+                    } else {
+                        $("[name=categoryLevel2]").append("<option value=" + datas.data[i].id + ">" + datas.data[i].categoryName + "</option>");
+                    }
 
-        $.getJSON(serverUrl + "/sys/categoryList?parentId=" + data.value, function (datas) {
-            for (var i = 0; i < datas.data.length; i++) {
-                if (data.value > 2) {
-                    $("[name=categoryLevel3]").append("<option value=" + datas.data[i].id + ">" + datas.data[i].categoryName + "</option>");
-                } else {
-                    $("[name=categoryLevel2]").append("<option value=" + datas.data[i].id + ">" + datas.data[i].categoryName + "</option>");
                 }
-
+                form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
             }
-            form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
-        })
+        });
     });
 
+
+    $(function () {
+        var isTrue = true;
+        //重名验证
+        $("[name=aPKName]").blur(function () {
+            if ($(this).val() != "") {
+                $.ajax({
+                    type: "GET",
+                    url:serverUrl + "/sys/findbyapkname" ,
+                    data:{"aPKName":$(this).val()},
+                    dataType:"json",
+                    success: function (data) {
+                        register_dev(data.code);
+                        if (data.data.result == "exits") {
+                            layer.msg("APK名称已存在,不可使用~");
+                            isTrue = false;
+                        } else {
+                            layer.msg("APK名称可用~");
+                            isTrue = true;
+                        }
+                    }
+                });
+            }
+        })
+    })
 
     form.verify({
         num: function (value, item) { //value：表单的值、item：表单的DOM对象
@@ -131,6 +158,7 @@ layui.config({
             data: data.field,
             dataType: "json",
             success: function (data) {
+                register_dev(data.code);
                 if (data.data.result == "success") {
                     layer.msg("新增成功");
                     setTimeout(function () {

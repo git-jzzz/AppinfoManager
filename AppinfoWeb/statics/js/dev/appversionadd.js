@@ -9,7 +9,7 @@ layui.use(['upload', 'layer'], function () {
         , exts: 'zip|apk' //只允许上传压缩文件 apk文件
         , size: 60 //限制文件大小，单位 KB
         , done: function (res) {
-
+            register_dev(res.code);
             if (res.code != 200) {
                 return layer.msg('上传失败');
             } else {
@@ -67,12 +67,16 @@ layui.config({
     form.on('submit(demo1)', function (data) {
         console.log(data.field);
         if ($("#src1").val() != "") {
+
+
+
             $.ajax({
                 url: serverUrl + '/sys/versionadd',
                 type: "post",
                 data: data.field,
                 dataType: "json",
                 success: function (data) {
+                    register_dev(data.code);
                     if (data.data.result == "success") {
                         layer.alert("操作成功！");
                         history.back(-1);

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import cn.appinfo.util.Result;
 import cn.appinfo.util.TableData;
@@ -36,6 +37,12 @@ public class AppVersionController {
 	@Autowired
 	private  AppInfoService appInfoService;
 
+	@Autowired
+	private HttpServletRequest request;
+
+	private String reload() {
+		return request.getAttribute("reloadToken") != null ? request.getAttribute("reloadToken").toString() : null;
+	}
 	/**
 	 * 历史版本
 	 * @param appId
@@ -43,10 +50,13 @@ public class AppVersionController {
 	 */
 	@RequestMapping(value="/appversionlist")
 	@ResponseBody
-	public TableData appVersionList(String appId){
+	public TableData appVersionList(String appId, HttpServletResponse response){
 		TableData<AppVersion> data=new TableData<AppVersion>();
 		data.setCode(0);
 		data.setData(appVersionService.getVlist(appId==null?null:Integer.parseInt(appId)));
+		if(reload()!=null){
+			response.addHeader("reloadToken", reload());
+		}
 		return data;
 	}
 
@@ -90,7 +100,7 @@ public class AppVersionController {
 		map2.put("src3", apkFileName);//文件名
 		map.put("data",map2);
 
-		return Result.ok(map);
+		return reload()==null? Result.ok(map):Result.ok(map,reload());
 	}
 
 
@@ -103,11 +113,7 @@ public class AppVersionController {
 	@RequestMapping(value="/versionadd",method = RequestMethod.POST)
 	@ResponseBody
 	public Result appVersionAdd(AppVersion appVersion,HttpServletRequest request){
-
-
-
 		Map<String, String> map=new HashMap<String, String>();
-
 		if(appVersion.getId()!=null){
 			//修改版本
 			appVersion.setModifyBy(1);
@@ -131,8 +137,7 @@ public class AppVersionController {
 				map.put("result", "lose");
 			}
 		}
-
-		return Result.ok(map);
+		return reload()==null? Result.ok(map):Result.ok(map,reload());
 	}
 
 
@@ -159,7 +164,7 @@ public class AppVersionController {
 		}else {
 			map.put("result", "lose2");
 		}
-		return Result.ok(map);
+		return reload()==null? Result.ok(map):Result.ok(map,reload());
 	}
 
 
@@ -168,7 +173,7 @@ public class AppVersionController {
 	public Result findAppVersionId(String id){
 		Map<String,Object> map=new HashMap<>();
 		map.put("version", appVersionService.getVersionByid(Integer.parseInt(id)));
-		return Result.ok(map);
+		return reload()==null? Result.ok(map):Result.ok(map,reload());
 	}
 
 }

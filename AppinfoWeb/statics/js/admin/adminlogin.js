@@ -12,8 +12,9 @@ $(function () {
                 dataType: 'json',
                 success: function (result) {
                     if (result.code == '200') {
-                        var userName = result.data.userName;
-                        sessionStorage.setItem("backerUser", userName);
+                            var userName = result.data.backendUser.userName;
+                            sessionStorage.setItem("backerUser", userName);
+                            localStorage.setItem("token_back", result.data.token_back)
                         location.href = 'bumain.html';
                     } else {
                         layer.msg(result.msg);

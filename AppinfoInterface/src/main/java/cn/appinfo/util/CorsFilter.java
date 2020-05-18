@@ -27,6 +27,12 @@ public class CorsFilter implements Filter{
 		response.setHeader("Access-Control-Allow-Headers","*");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		chain.doFilter(req, res);
+
+
+
+
+
+
 	}
 
 	@Override

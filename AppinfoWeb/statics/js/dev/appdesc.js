@@ -3,39 +3,47 @@ layui.config({
     base: '../../statics/layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
-}).use(['index', 'table', 'form', 'layer'], function () {
+}).use(['index', 'table', 'form', 'layer','jquery'], function () {
     var table = layui.table;
     form = layui.form;
     layer = layui.layer;
+    $=layui.$;
 
     var appinfo;
     var id = sessionStorage.getItem("id");
     sessionStorage.removeItem("id");
-    $.getJSON(serverUrl + "/sys/findbyid?id=" + id, function (data) {
-        appinfo = data.data.appinfo;
-        /*加载表单数据*/
-        form.val('example', {
-            "softwareName": appinfo.softwareName  // "name": "value"
-            , "aPKName": appinfo.aPKName
-            , "supportROM": appinfo.supportROM
-            , "interfaceLanguage": appinfo.interfaceLanguage //复选框选中状态
-            , "softwareSize": appinfo.softwareSize //开关状态
-            , "downloads": appinfo.downloads
-            , "appInfo": appinfo.appInfo
-            , "logoPicPath": appinfo.logoPicPath
-            , "logoLocPath": appinfo.logoLocPath
-            , "downloads": appinfo.downloads
-            , "id": appinfo.id
-            , "status": appinfo.status
-            , "logoPicPath": appinfo.logoPicPath
-            , "logoLocPath": appinfo.logoLocPath
-            , "categoryContext": appinfo.categoryContext
-            , "flatformName": appinfo.flatformName
-            , "statusName": appinfo.statusName
-        });
-        $("#demo1").attr("src", appinfo.logoPicPath);
+    $.ajax({
+        type: "GET",
+        url:serverUrl + "/sys/findbyid?id=" + id,
+        success: function (data) {
+            register_dev(data.code);
+            appinfo = data.data.appinfo;
+            /*加载表单数据*/
+            form.val('example', {
+                "softwareName": appinfo.softwareName  // "name": "value"
+                , "aPKName": appinfo.aPKName
+                , "supportROM": appinfo.supportROM
+                , "interfaceLanguage": appinfo.interfaceLanguage //复选框选中状态
+                , "softwareSize": appinfo.softwareSize //开关状态
+                , "downloads": appinfo.downloads
+                , "appInfo": appinfo.appInfo
+                , "logoPicPath": appinfo.logoPicPath
+                , "logoLocPath": appinfo.logoLocPath
+                , "downloads": appinfo.downloads
+                , "id": appinfo.id
+                , "status": appinfo.status
+                , "logoPicPath": appinfo.logoPicPath
+                , "logoLocPath": appinfo.logoLocPath
+                , "categoryContext": appinfo.categoryContext
+                , "flatformName": appinfo.flatformName
+                , "statusName": appinfo.statusName
+            });
+            $("#demo1").attr("src", appinfo.logoPicPath);
+        }
+    });
 
-    })
+
+
 
     //第一个实例
     table.render({

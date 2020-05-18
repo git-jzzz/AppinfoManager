@@ -160,6 +160,20 @@
       <version>1.18.12</version>
     </dependency>
 
+    <!--加入redis 所需依赖-->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>2.1.0</version>
+    </dependency>
+
+    <!--判断用户设备类型-->
+    <dependency>
+      <groupId>nl.bitwalker</groupId>
+      <artifactId>UserAgentUtils</artifactId>
+      <version>1.2.4</version>
+    </dependency>
+
   </dependencies>
 
   <build>

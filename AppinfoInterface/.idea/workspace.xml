@@ -13,9 +13,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="AppinfoInterface" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -49,14 +53,19 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../tomcatFile/Appinfo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cn.appinfo.aspect" />
+      <recent name="cn.appinfo.util" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoInterface\src\main\resources" />
       <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoInterface\src\main\java\cn\appinfo\util" />
       <recent name="D:\File\Idea_file\222\AppInfoManager\AppinfoInterface\src\main" />
     </key>
@@ -167,7 +176,9 @@
       <workItem from="1588833145027" duration="30249000" />
       <workItem from="1589176825841" duration="7512000" />
       <workItem from="1589243655116" duration="4424000" />
-      <workItem from="1589266115053" duration="1697000" />
+      <workItem from="1589266115053" duration="5302000" />
+      <workItem from="1589334518549" duration="6554000" />
+      <workItem from="1589350533180" duration="60346000" />
     </task>
     <servers />
   </component>

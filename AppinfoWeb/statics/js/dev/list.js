@@ -1,31 +1,44 @@
 var form;
+var table;
+var $;
 layui.config({
     base: '../../statics/layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
-}).use(['index', 'table', 'form'], function () {
-    var table = layui.table;
+}).use(['index', 'table', 'form','jquery'], function () {
+     table = layui.table;
     form = layui.form;
+    $=layui.$;
     //获取下拉框
-
-    $.getJSON(serverUrl + "/sys/datedictionlist", function (datas) {
-        for (var i = 0; i < datas.data.length; i++) {
-            var item = datas.data[i];
-            if (item.typeCode == "APP_STATUS") {
-                $("[name=status]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
-            } else if (item.typeCode == "APP_FLATFORM") {
-                $("[name=flatformId]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
+    $.ajax({
+        type: "GET",
+        url:serverUrl + "/sys/datedictionlist" ,
+        success: function (datas) {
+            register_dev(datas.code);
+            for (var i = 0; i < datas.data.length; i++) {
+                var item = datas.data[i];
+                if (item.typeCode == "APP_STATUS") {
+                    $("[name=status]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
+                } else if (item.typeCode == "APP_FLATFORM") {
+                    $("[name=flatformId]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
+                }
             }
+            form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
         }
-        form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
-    })
+    });
+
     $("[name=categoryLevel1]").append("<option value=''>全部</option>");
-    $.getJSON(serverUrl + "/sys/categoryList", function (data) {
-        for (var i = 0; i < data.data.length; i++) {
-            $("[name=categoryLevel1]").append("<option value=" + data.data[i].id + ">" + data.data[i].categoryName + "</option>");
+    $.ajax({
+        type: "GET",
+        url:serverUrl + "/sys/categoryList" ,
+        success: function (data) {
+            register_dev(data.code);
+            for (var i = 0; i < data.data.length; i++) {
+                $("[name=categoryLevel1]").append("<option value=" + data.data[i].id + ">" + data.data[i].categoryName + "</option>");
+            }
+            form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
         }
-        form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
-    })
+    });
 
     //分类
     form.on('select(c1)', function (data) {
@@ -40,24 +53,29 @@ layui.config({
                     $("#3").append("<option value=''>请先选择父级分类</option>");
                 }
                 /*123联动*/
-                $.getJSON(serverUrl + "/sys/categoryList?parentId=" + val, function (data) {
-                    $("#" + id + "").html("");
-                    if (data.data.length != 0) {
-                        $("#" + id + "").append(" <option value=''>全部</option>");
-                        for (var o = 0; o < data.data.length; o++) {
-                            $("#" + id + "").append("<option value='" + data.data[o].id + "'>'" + data.data[o].categoryName + "'</option>");
+                $.ajax({
+                    type: "GET",
+                    url:serverUrl + "/sys/categoryList?parentId=" + val ,
+                    success: function (data) {
+                        register_dev(data.code);
+                        $("#" + id + "").html("");
+                        if (data.data.length != 0) {
+                            $("#" + id + "").append(" <option value=''>全部</option>");
+                            for (var o = 0; o < data.data.length; o++) {
+                                $("#" + id + "").append("<option value='" + data.data[o].id + "'>'" + data.data[o].categoryName + "'</option>");
+                            }
+                        } else {
+                            $("#" + id + "").append(" <option value=''>暂无</option>");
                         }
-                    } else {
-                        $("#" + id + "").append(" <option value=''>暂无</option>");
+                        form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
                     }
-                    form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
-                })
+                });
             }
         }
     });
 
 
-    table.render({
+   var tableIns= table.render({
         elem: '#info'
         , url: serverUrl + '/sys/list'//数据接口
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
@@ -75,34 +93,51 @@ layui.config({
             , {field: 'versionNo', width: 80, title: '最新版本号'}
             , {field: 'versionId', title: 'vid', width: 50, hide: true}
             , {field: 'id', title: 'id', width: 50, hide: true}
-            , {title: '操作', align: 'center', toolbar: '#barDemo'}
+            , {title: '操作',width: 200, align: 'center', toolbar: '#barDemo'}
         ]]
     });
     //监听提交 lay-filter="search"
     form.on('submit(search)', function (data) {
-        var formData = data.field;
-        var softwareName = formData.softwareName,
 
-            url = formData.url,
-            icon = formData.icon,
+        var formData = data.field;
+        console.log(formData);
+
+            url = formData.url;
+            icon = formData.icon;
             parent_id = formData.parent_id;
         //执行重载
-        table.reload('info', {
-            page: {
-                curr: 1 //重新从第 1 页开始
-            }
-            , where: {//这里传参  向后台
-                softwareName: softwareName,
+        tableIns.reload('info', {
+            where: { //设定异步数据接口的额外参数，任意设
+                softwareName: formData.softwareName,
                 status: formData.status,
                 flatformId: formData.flatformId,
                 categoryLevel1: formData.categoryLevel1,
                 categoryLevel2: formData.categoryLevel2,
                 categoryLevel3: formData.categoryLevel3,
-                //可传多个参数到后台...  ，分隔
+            }
+            ,page: {
+                curr: 1 //重新从第 1 页开始
             }
             , url: serverUrl + '/sys/list'//后台做模糊搜索接口路径
+        }); //只重载数据
+
+       /* //执行重载
+        tableIns.reload('info', {
+            where: {//这里传参  向后台
+                softwareName: softwareName,
+                status: formData.status,
+                flatformId: formData.flatformId,
+                categoryLevel1: formData.categoryLevel1,
+                categoryLevel2: formData.categoryLevel2,
+                categoryLevel3: formData.categoryLevel3
+                //可传多个参数到后台...  ，分隔
+            }
+            ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            , url: serverUrl + '/sys/list'//后台做模糊搜索接口路径
             , method: 'post'
-        });
+        });*/
         return false;//false：阻止表单跳转  true：表单跳转
     });
 
@@ -138,7 +173,7 @@ layui.config({
             if (data.statusName == ("审核未通过") || data.statusName == "待审核") {
 
                 /*进入修改页面*/
-                sessionStorage.setItem("appid", data.id);
+                localStorage.setItem("appid", data.id);
                 location.href = "appupdate.html";
             } else {
                 layer.msg("该APP应用的状态为：[" + data.statusName + "],不能修改！");
@@ -161,16 +196,21 @@ layui.config({
             if (layEvent === 'shang') {
                 status = 4;
             }
-            $.getJSON(serverUrl + "/sys/setStatus", "id=" + data.id + "&status=" + status, function (data) {
-                if (data.data.result = "success") {
-                    //重载表格
-                    table.reload('info', {
-                        url: serverUrl + '/sys/list'
-                    });
-                } else {
-                    layer.msg("系统繁忙,请联系管理员");
+            $.ajax({
+                type: "GET",
+                url:serverUrl + "/sys/setStatus?id=" + data.id + "&status=" + status,
+                success: function (data) {
+                    register_dev(data.code);
+                    if (data.data.result = "success") {
+                        //重载表格
+                        table.reload('info', {
+                            url: serverUrl + '/sys/list'
+                        });
+                    } else {
+                        layer.msg("系统繁忙,请联系管理员");
+                    }
                 }
-            })
+            });
         }
     });
 })

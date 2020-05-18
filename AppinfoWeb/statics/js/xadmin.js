@@ -4,7 +4,7 @@ $(function () {
     function() {
         layer = layui.layer;
         element = layui.element;
-        $=lauui.$;
+        $=layui.$;
     });
 
     //触发事件

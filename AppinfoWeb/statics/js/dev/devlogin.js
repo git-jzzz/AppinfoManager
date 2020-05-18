@@ -1,5 +1,5 @@
 $(function () {
-    layui.use('form', function () {
+    layui.use(['form'], function () {
         var form = layui.form
         layer = layui.layer;
 
@@ -13,9 +13,9 @@ $(function () {
                 dataType: 'json',
                 success: function (result) {
                     if (result.code == '200') {
-
-                        var devName = result.data.devName;
+                        var devName = result.data.devUser.devName;
                         sessionStorage.setItem("devUser", devName);
+                        localStorage.setItem("token_dev", result.data.token_dev);
                         location.href = 'dpmain.html';
                     } else {
                         layer.msg(result.msg);

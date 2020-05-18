@@ -1,7 +1,8 @@
 //JavaScript代码区域
 //加载多个组件 使用数组
-layui.use(['element', 'layer'], function () {
+layui.use(['element', 'layer','jquery'], function () {
     var element = layui.element
+    $=layui.$
     layer = layui.layer;
 
 
@@ -11,16 +12,27 @@ layui.use(['element', 'layer'], function () {
 
     //退出登录
     $("#loginout").click(function () {
-        $.get(serverUrl + "/dev/dploginout", function (data) {
-            layer.msg("退出成功");
-            setTimeout(function () {
-                sessionStorage.removeItem("devUser");
-                location.href = "../index.html";
-            }, 1000);
-        })
+        $.ajax({
+            type: "GET",
+            url:serverUrl + "/dev/dploginout",
+            success: function (data) {
+                register_dev(data.code);
+                if (data.code == 200) {
+                    layer.msg("退出成功");
+                    setTimeout(function () {
+                        sessionStorage.removeItem("devUser");
+                        localStorage.removeItem("token_dev");
+                        location.href = "../index.html";
+                    }, 1000);
+                } else {
+                    layer.msg(data.msg);
+                }
+            }
+        });
     })
+
+  window.del=  function () {
+        $("#d").remove();
+    }
 });
 
-function del() {
-    $("#d").remove();
-}

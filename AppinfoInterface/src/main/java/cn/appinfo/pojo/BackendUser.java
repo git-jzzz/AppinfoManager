@@ -2,10 +2,11 @@ package cn.appinfo.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class BackendUser {
+public class BackendUser  {
 	private Integer id;//主键id
 	private String userCode;//用户编码（登录账号）
 	private String userName;//用户名称

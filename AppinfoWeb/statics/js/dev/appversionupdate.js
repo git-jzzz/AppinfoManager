@@ -10,7 +10,7 @@ layui.use('upload', function () {
         , exts: 'zip|apk' //只允许上传压缩文件 apk文件
         , size: 60 //限制文件大小，单位 KB
         , done: function (res) {
-
+            register_dev(res.code);
             if (res.code != 200) {
                 return layer.msg('上传失败');
             } else {
@@ -42,23 +42,27 @@ layui.config({
     sessionStorage.removeItem("appId");
     sessionStorage.removeItem("versionId");
     var version;
-    $.getJSON(serverUrl + "/sys/findVersionById?id=" + versionId, function (data) {
-        version = data.data.version;
-        console.log(version);
-        form.val('example', {
-            "versionNo": version.versionNo
-            , "versionSize": version.versionSize
-            , "publishStatus": version.publishStatus
-            , "versionInfo": version.versionInfo
-            , "appId": appId
-            , "downloadLink": version.downloadLink
-            , "apkLocPath": version.apkLocPath
-            , "apkFileName": version.apkFileName
-            , "id": version.id
-        });
-        $("#src5").html(version.apkFileName);
-    })
-
+    $.ajax({
+        type: "GET",
+        url:serverUrl + "/sys/findVersionById?id=" + versionId ,
+        success: function (data) {
+            register_dev(data.code);
+            version = data.data.version;
+            console.log(version);
+            form.val('example', {
+                "versionNo": version.versionNo
+                , "versionSize": version.versionSize
+                , "publishStatus": version.publishStatus
+                , "versionInfo": version.versionInfo
+                , "appId": appId
+                , "downloadLink": version.downloadLink
+                , "apkLocPath": version.apkLocPath
+                , "apkFileName": version.apkFileName
+                , "id": version.id
+            });
+            $("#src5").html(version.apkFileName);
+        }
+    });
 
     //第一个实例
     table.render({
@@ -92,11 +96,12 @@ layui.config({
                 data: data.field,
                 dataType: "json",
                 success: function (data) {
+                    register_dev(data.code);
                     if (data.data.result == "success") {
                         layer.alert("操作成功！");
                         history.back(-1);
                     } else {
-                        layer.alert("程序繁忙,请联系系统管理员！");
+                        layer.alert("程序繁忙,请联系统管理员！");
                     }
                 }
             });
@@ -116,18 +121,22 @@ layui.config({
 
     $("#del").click(function () {
         if ($("#src5").html() != "") {
-
-            $.getJSON(serverUrl + "/sys/delversionsrc", "id=" + version.id + "&apkFileName=" + $("[name=apkFileName]").val(), function (data) {
-                if (data.data.result = "success") {
-                    layer.alert("删除成功！", {icon: 1})
-                    $("[id^=src]").val("");
-                    $("#src5").html("");
-                } else if (data.data.result == "lose") {
-                    layer.alert("系统繁忙,请联系管理员！", {icon: 2});
-                } else {
-                    layer.alert("服务器不存在此路径！", {icon: 2});
+            $.ajax({
+                type: "GET",
+                url:serverUrl + "/sys/delversionsrc?id=" + version.id + "&apkFileName=" + $("[name=apkFileName]").val(),
+                success: function (data) {
+                    register_dev(data.code);
+                    if (data.data.result = "success") {
+                        layer.alert("删除成功！", {icon: 1})
+                        $("[id^=src]").val("");
+                        $("#src5").html("");
+                    } else if (data.data.result == "lose") {
+                        layer.alert("系统繁忙,请联系管理员！", {icon: 2});
+                    } else {
+                        layer.alert("服务器不存在此路径！", {icon: 2});
+                    }
                 }
-            })
+            });
         } else {
             layer.alert("无apk信息", {icon: 2});
         }
