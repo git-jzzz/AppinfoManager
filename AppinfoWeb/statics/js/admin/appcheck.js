@@ -70,10 +70,15 @@ layui.config({
 
     /*弹出下载链接*/
     $("#link").click(function () {
-        layer.alert("下载链接:" + version.downloadLink + "", {icon: 1});
+
     })
 
     $(".layui-btn").click(function () {
+        if(this.id=="link"){
+            layer.alert("下载链接:" + version.downloadLink + "", {icon: 1});
+            return ;
+        }
+
         var status = 3;
         if ($(this).html() == "审核通过") {
             status = 2;
@@ -85,16 +90,13 @@ layui.config({
                 success: function (data) {
                    register_back(data.code);
                     if(data.token!=null){
-                        localStorage.setItem("token_back",datas.token);
+                        localStorage.setItem("token_back",data.token);
                     }
                     if (data.data.result == "success") {
                         layer.alert("操作成功！");
                         history.back(-1);
                     } else {
                         layer.alert("程序繁忙,请联系系统管理员！");
-                    }
-                    if(datas.token!=null){
-                        localStorage.setItem("token_back",datas.token);
                     }
                 }
             });

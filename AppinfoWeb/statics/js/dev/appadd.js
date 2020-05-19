@@ -50,7 +50,7 @@ layui.config({
     form = layui.form;
     $=layui.$;
 
-    //获取下拉框
+   /* //获取下拉框
     $.ajax({
         type: "GET",
         url:serverUrl + "/sys/datedictionlist" ,
@@ -107,7 +107,7 @@ layui.config({
                 form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
             }
         });
-    });
+    });*/
 
 
     $(function () {

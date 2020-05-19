@@ -42,16 +42,14 @@ layui.config({
 }).extend({
     index: 'lib/index' //主入口模块
 }).use(['index', 'table', 'form', 'layer','jquery'], function () {
-    var table = layui.table
-    form = layui.form
+    var table = layui.table,
+    form = layui.form,
     $=layui.$;
 
 
     /*加载数据*/
     var appinfo;
-    var id = localStorage.getItem("appid");
-        /*移除数据*/
-    localStorage.removeItem("appid");
+    var id = sessionStorage.getItem("appid");
     $.ajax({
         type: "GET",
         url:serverUrl + "/sys/findbyid" ,
@@ -60,8 +58,9 @@ layui.config({
         success: function (data) {
             register_dev(data.code);
             /*表单赋值*/
-            console.log(appinfo);
+
             appinfo = data.data.appinfo;
+            console.log(appinfo);
             form.val('example', {
                 "softwareName": appinfo.softwareName  // "name": "value"
                 , "aPKName": appinfo.aPKName
@@ -86,81 +85,45 @@ layui.config({
 
             $("#2").append("<option value='" + appinfo.categoryLevel2 + "'>" + appinfo.categoryLevel2Name + "</option>");
             $("#3").append("<option value='" + appinfo.categoryLevel3 + "'>" + appinfo.categoryLevel3Name + "</option>");
-        }
-    });
 
-    //获取下拉框
-    $.ajax({
-        type: "GET",
-        url:serverUrl + "/sys/datedictionlist" ,
-        success: function (datas) {
-            register_dev(datas.code);
-            for (var i = 0; i < datas.data.length; i++) {
-                var item = datas.data[i];
-                if (item.typeCode == "APP_STATUS") {
-                    $("[name=status]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
-                } else if (item.typeCode == "APP_FLATFORM") {
-                    $("[name=flatformId]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
-                }
-            }
-            $("[name=flatformId]").find("option[value="+appinfo.flatformId+"]").prop("selected", true);
-            form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
-        }
-    });
-
-    $.ajax({
-        type: "GET",
-        url:serverUrl + "/sys/categoryList" ,
-        success: function (data) {
-            register_dev(data.code);
-            var i = appinfo.categoryLevel1;
-            for (var i = 0; i < data.data.length; i++) {
-
-                $("[name=categoryLevel1]").append("<option value=" + data.data[i].id + ">" + data.data[i].categoryName + "</option>");
-            }
-            /*选中*/
-            $("[name=categoryLevel1]").find("option[value='" + appinfo.categoryLevel1 + "']").prop("selected", true);
-            form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
-        }
-    });
-
-    //三级分类
-    form.on('select(c1)', function (data) {
-        var id = data.elem.getAttribute("id");
-        var val = data.value;
-        if (id != 3) {
-            id++;
-            if (val != '') {
-                if (id == 2) {
-                    /*清空第三级信息*/
-                    $("#3").html("");
-                    $("#3").append("<option value=''>请先选择父级分类</option>");
-                }
-                /*123联动*/
-                $.ajax({
-                    type: "GET",
-                    url:serverUrl + "sys/categoryList" ,
-                    data:{"parentId":val},
-                    dataType:"json",
-                    success: function (data) {
-                        register_dev(data.code);
-                        $("#" + id + "").html("");
-                        if (data.data.length != 0) {
-                            $("#" + id + "").append(" <option value=''>全部</option>");
-                            for (var o = 0; o < data.data.length; o++) {
-                                $("#" + id + "").append("<option value='" + data.data[o].id + "'>" + data.data[o].categoryName + "</option>");
-                            }
-                        } else {
-                            $("#" + id + "").append(" <option value=''>暂无</option>");
+            //获取下拉框
+            $.ajax({
+                type: "GET",
+                url:serverUrl + "/sys/datedictionlist" ,
+                success: function (datas) {
+                    register_dev(datas.code);
+                    for (var i = 0; i < datas.data.length; i++) {
+                        var item = datas.data[i];
+                       if (item.typeCode == "APP_FLATFORM") {   
+                            $("[name=flatformId]").append("<option value=" + item.valueId + ">" + item.valueName + "</option>");
                         }
-                        form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
                     }
-                });
+                    $("[name=flatformId]").find("option[value="+appinfo.flatformId+"]").prop("selected", true);
+                    form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
+                }
+            });
 
+            $.ajax({
+                type: "GET",
+                url:serverUrl + "/sys/categoryList" ,
+                success: function (data) {
+                    register_dev(data.code);
+                    var i = appinfo.categoryLevel1;
+                    for (var i = 0; i < data.data.length; i++) {
 
-            }
+                        $("[name=categoryLevel1]").append("<option value=" + data.data[i].id + ">" + data.data[i].categoryName + "</option>");
+                    }
+                    /*选中*/
+                    $("[name=categoryLevel1]").find("option[value='" + appinfo.categoryLevel1 + "']").prop("selected", true);
+                    form.render('select');//select是固定写法 不是选择器   渲染 下拉框   否则不会刷新数据
+                }
+            });
         }
     });
+
+
+
+
 
     $("#shen").click(function () {
         /* 单击修改状态 */
