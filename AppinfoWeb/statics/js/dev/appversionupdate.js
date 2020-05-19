@@ -73,8 +73,8 @@ layui.config({
             , {field: 'versionNo', title: '版本号'}
             , {field: 'versionSize', title: '版本大小'}
             , {field: 'publishStatusName', title: '发布状态'}
-            , {field: 'downloadLink', title: 'APK文件下载'}
-            , {field: 'modifyDate', title: '最新更新时间'}
+            , {field: 'downloadLink',width : 300, title: 'APK文件下载'}
+            , {field: 'modifyDate',width :100, title: '最新更新时间'}
         ]]
     });
 

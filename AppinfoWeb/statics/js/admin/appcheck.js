@@ -53,7 +53,6 @@ layui.config({
             });
 
             form.val('example2', {
-
                 "versionNo": version.versionNo
                 , "versionSize": version.versionSize
                 , "versionInfo": version.versionInfo

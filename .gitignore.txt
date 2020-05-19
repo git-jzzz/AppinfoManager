@@ -1,0 +1,4 @@
+AppinfoManager/target/
+AppinfoInterface/target/
+AppinfoManager/
+.gitignore

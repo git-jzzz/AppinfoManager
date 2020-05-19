@@ -1,13 +1,10 @@
-var form;
-var table;
-var $;
 layui.config({
     base: '../../statics/layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
 }).use(['index', 'table', 'form','jquery'], function () {
-     table = layui.table;
-    form = layui.form;
+     var table = layui.table,
+    form = layui.form,
     $=layui.$;
     //获取下拉框
     $.ajax({
@@ -75,7 +72,7 @@ layui.config({
     });
 
 
-   var tableIns= table.render({
+    table.render({
         elem: '#info'
         , url: serverUrl + '/sys/list'//数据接口
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
@@ -106,7 +103,7 @@ layui.config({
             icon = formData.icon;
             parent_id = formData.parent_id;
         //执行重载
-        tableIns.reload('info', {
+        table.reload('info', {
             where: { //设定异步数据接口的额外参数，任意设
                 softwareName: formData.softwareName,
                 status: formData.status,

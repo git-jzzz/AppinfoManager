@@ -1,4 +1,4 @@
-/** layui-v2.4.5 MIT License By https://www.layui.com */
+/** layui-v2.5.5 MIT License By https://www.layui.com */
 ;!function (e, t) {
     "object" == typeof module && "object" == typeof module.exports ? module.exports = e.document ? t(e, !0) : function (e) {
         if (!e.document) throw new Error("jQuery requires a window with a document");

@@ -26,7 +26,7 @@
         code: "modules/code",
         jquery: "modules/jquery_back",
         mobile: "modules/mobile",
-        "layui.all": "dest/layui.all"
+        "layui.all": "../layui.all_back"
     };
     n.prototype.cache = o, n.prototype.define = function (e, t) {
         var n = this, r = "function" == typeof e, a = function () {

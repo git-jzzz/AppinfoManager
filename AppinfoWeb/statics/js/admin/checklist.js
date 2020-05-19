@@ -1,11 +1,10 @@
-var form;
 layui.config({
     base: '../../statics/layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
 }).use(['index', 'table', 'form','jquery'], function () {
-    var table = layui.table;
-    form = layui.form;
+    var table = layui.table,
+    form = layui.form,
     $=layui.$;
     table.set({headers:{token_back: localStorage.getItem("token_back")}})
 //获取下拉框
