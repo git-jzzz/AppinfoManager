@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class MD5 {
-    public static String getMd5(String plainText,int length) {
+    public static String getMd5(String plainText, int length) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(plainText.getBytes());
@@ -35,14 +35,15 @@ public class MD5 {
 
     }
 
-    public static int getRandomCode(){
-        int max=9999;
-        int min=1111;
+    public static int getRandomCode() {
+        int max = 9999;
+        int min = 1111;
         Random random = new Random();
-        return random.nextInt(max)%(max-min+1) + min;
+        return random.nextInt(max) % (max - min + 1) + min;
     }
+
     public static void main(String[] args) {
-        System.out.println(MD5.getMd5("helloadsfdsffsf",6));
+        System.out.println(MD5.getMd5("helloadsfdsffsf", 6));
         System.out.println(getRandomCode());
     }
 

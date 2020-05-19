@@ -47,8 +47,8 @@ public class BackendUserController {
             try {
                 String token = tokenService.generateToken(userAgent, backendUser);
                 tokenService.save(token, backendUser);
-                map.put("backendUser",backendUser);
-                map.put("token_back",token);
+                map.put("backendUser", backendUser);
+                map.put("token_back", token);
 
             } catch (Exception e) {
                 return Result.error(e.getMessage());
@@ -63,21 +63,22 @@ public class BackendUserController {
 
     /**
      * 注销后返回入口
+     *
      * @return
      */
     @RequestMapping(value = "/buloginout", method = RequestMethod.GET)
     @ResponseBody
     public Result loginOut(HttpServletRequest request) {
-      String   token=request.getHeader("token_back");
+        String token = request.getHeader("token_back");
         System.out.println(token);
-        long result=0;
+        long result = 0;
         try {
-            if(tokenService.validate(request.getHeader("user-agent"), token)){
-                 result=tokenService.delete(token);
+            if (tokenService.validate(request.getHeader("user-agent"), token)) {
+                result = tokenService.delete(token);
             }
         } catch (Exception e) {
             return Result.error(e.getMessage());
         }
-        return Result.ok(null,"返回值："+result);
+        return Result.ok(null, "返回值：" + result);
     }
 }

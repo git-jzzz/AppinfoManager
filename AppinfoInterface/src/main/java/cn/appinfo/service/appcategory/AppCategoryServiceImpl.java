@@ -12,22 +12,20 @@ import javax.annotation.Resource;
 
 @Service("appCategoryService")
 public class AppCategoryServiceImpl implements AppCategoryService {
-	
-	@Resource
-	private AppCategoryMapper appCategoryMapper;
-	
-	
 
-	public void setAppCategoryMapper(AppCategoryMapper appCategoryMapper) {
-		this.appCategoryMapper = appCategoryMapper;
-	}
+    @Resource
+    private AppCategoryMapper appCategoryMapper;
 
 
+    public void setAppCategoryMapper(AppCategoryMapper appCategoryMapper) {
+        this.appCategoryMapper = appCategoryMapper;
+    }
 
-	@Override
-	public List<AppCategory> getCategoryListByParentId(Integer parentId) {
-		// TODO Auto-generated method stub
-		return appCategoryMapper.getCategoryListByParentId(parentId);
-	}
+
+    @Override
+    public List<AppCategory> getCategoryListByParentId(Integer parentId) {
+        // TODO Auto-generated method stub
+        return appCategoryMapper.getCategoryListByParentId(parentId);
+    }
 
 }

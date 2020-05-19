@@ -4,14 +4,15 @@ import cn.appinfo.pojo.DevUser;
 
 /**
  * ������
- * @author Administrator
  *
+ * @author Administrator
  */
 public interface DevUserMapper {
-	/**
-	 * �������û���¼
-	 * @return
-	 */
-	DevUser login(DevUser du);
-	
+    /**
+     * �������û���¼
+     *
+     * @return
+     */
+    DevUser login(DevUser du);
+
 }

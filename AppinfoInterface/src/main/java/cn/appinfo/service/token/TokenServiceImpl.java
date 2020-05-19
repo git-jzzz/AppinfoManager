@@ -50,8 +50,8 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public boolean validate(String userAgent, String token) throws TokenException {
-        if (token==null||!redisApi.exists(token)) {
-            throw new TokenException("messgae: token is invalid:"+token);
+        if (token == null || !redisApi.exists(token)) {
+            throw new TokenException("messgae: token is invalid:" + token);
         }
        /* String agentMD5 = token.split("-")[3];
         if (!MD5.getMd5(userAgent, 6).equals(agentMD5)) {
@@ -96,7 +96,7 @@ public class TokenServiceImpl implements TokenService {
 //       生成token
         String newtoken = this.generateToken(userAgent, (backendUser != null ? backendUser : devUser));
 //旧token延时过期
-        redisApi.set( token, delay,user);
+        redisApi.set(token, delay, user);
 //新token保存至redis
         this.save(newtoken, (backendUser != null ? backendUser : devUser));
         return newtoken;

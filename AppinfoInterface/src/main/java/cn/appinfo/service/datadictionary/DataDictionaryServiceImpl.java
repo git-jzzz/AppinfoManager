@@ -13,23 +13,19 @@ import javax.annotation.Resource;
 @Service("dataDictionaryService")
 public class DataDictionaryServiceImpl implements DataDictionaryService {
 
-	@Resource
-	private DataDictionaryMapper dataDictionaryMapper;
+    @Resource
+    private DataDictionaryMapper dataDictionaryMapper;
 
-	
 
-	public void setDataDictionaryMapper(DataDictionaryMapper dataDictionaryMapper) {
-		this.dataDictionaryMapper = dataDictionaryMapper;
-	}
+    public void setDataDictionaryMapper(DataDictionaryMapper dataDictionaryMapper) {
+        this.dataDictionaryMapper = dataDictionaryMapper;
+    }
 
-	@Override
-	public List<DataDictionary> getDataDictionaryList(String typeCode) {
-		// TODO Auto-generated method stub
-		return dataDictionaryMapper.getDataDictionaryList(typeCode);
-	}
-	
-	
-	
-	
-	
+    @Override
+    public List<DataDictionary> getDataDictionaryList(String typeCode) {
+        // TODO Auto-generated method stub
+        return dataDictionaryMapper.getDataDictionaryList(typeCode);
+    }
+
+
 }

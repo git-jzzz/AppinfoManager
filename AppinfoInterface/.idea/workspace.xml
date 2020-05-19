@@ -53,7 +53,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -179,6 +179,7 @@
       <workItem from="1589266115053" duration="5302000" />
       <workItem from="1589334518549" duration="6554000" />
       <workItem from="1589350533180" duration="62525000" />
+      <workItem from="1589875654653" duration="130000" />
     </task>
     <servers />
   </component>

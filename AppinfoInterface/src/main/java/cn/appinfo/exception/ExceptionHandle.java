@@ -16,24 +16,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 public class ExceptionHandle {
 
-    private Logger logger= LoggerFactory.getLogger(Exception.class);
+    private Logger logger = LoggerFactory.getLogger(Exception.class);
 
     @ExceptionHandler(TokenException.class)
-    public Result handleTokenException(Exception e){
-        logger.info("Token未知或已过期！",e);
+    public Result handleTokenException(Exception e) {
+        logger.info("Token未知或已过期！", e);
         return Result.errorToken("Token未知或已过期！");
     }
 
     @ExceptionHandler(Exception.class)
-    public Result handleException(Exception e){
-        logger.error("Internal server Wrror...",e);
+    public Result handleException(Exception e) {
+        logger.error("Internal server Wrror...", e);
         return Result.error("Internal server Wrror...");
     }
 
 
     @ExceptionHandler(NotFoundException.class)
-    public Result notHandleException(Exception e){
-        logger.error("Not Found Error",e);
+    public Result notHandleException(Exception e) {
+        logger.error("Not Found Error", e);
         return Result.error("Not Found Error");
     }
 }

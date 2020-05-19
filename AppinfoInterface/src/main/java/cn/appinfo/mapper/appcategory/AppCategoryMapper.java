@@ -8,15 +8,16 @@ import cn.appinfo.pojo.AppCategory;
 
 /**
  * app分类表
- * @author Administrator
  *
+ * @author Administrator
  */
 public interface AppCategoryMapper {
-	
-	/**
-	 * 依据父id查询分类列表
-	 * @param parentId
-	 * @return
-	 */
-	List<AppCategory> getCategoryListByParentId(@Param("parentId") Integer parentId);
+
+    /**
+     * 依据父id查询分类列表
+     *
+     * @param parentId
+     * @return
+     */
+    List<AppCategory> getCategoryListByParentId(@Param("parentId") Integer parentId);
 }

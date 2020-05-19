@@ -25,7 +25,6 @@ import java.util.Map;
 
 @RequestMapping("/sys/back")
 @Controller
-
 public class AppinfoBackController {
 
     @Autowired
@@ -39,6 +38,14 @@ public class AppinfoBackController {
 
     @Autowired
     private DataDictionaryService dataDictionaryService;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    public Integer getBackId() {
+        return Integer.parseInt(request.getHeader("token_back").split("-")[2]);
+    }
+
 
     @RequestMapping(value = "/back_auth", method = RequestMethod.GET)
     @ResponseBody
@@ -60,11 +67,8 @@ public class AppinfoBackController {
     @ResponseBody
     public Result getDateDictionaryList(String typeCode) {
         List<DataDictionary> dlist = dataDictionaryService.getDataDictionaryList(typeCode);
-        return reload()==null? Result.ok(dlist):Result.ok(dlist, reload());
+        return reload() == null ? Result.ok(dlist) : Result.ok(dlist, reload());
     }
-
-    @Autowired
-    private HttpServletRequest request;
 
     /**
      * 查询分类列表
@@ -77,23 +81,23 @@ public class AppinfoBackController {
         Integer pid = parentId == null || parentId.equals("0") ? 0 : Integer.parseInt(parentId);
         List<AppCategory> clist = appCategoryService.getCategoryListByParentId(pid);
 
-        return reload()==null? Result.ok(clist):Result.ok(clist,reload());
+        return reload() == null ? Result.ok(clist) : Result.ok(clist, reload());
     }
 
     /*applist*/
     @RequestMapping(value = "/list")
     @ResponseBody
     public TableData getAppInfoByCondition(@RequestParam(required = false) String softwareName, @RequestParam(required = false) String status, @RequestParam(required = false) String flatformId, @RequestParam(required = false) String categoryLevel1, @RequestParam(required = false) String categoryLevel2,
-                                           @RequestParam(required = false) String categoryLevel3, HttpServletResponse response,  @RequestParam(defaultValue = "1") String page, @RequestParam(required = false, defaultValue = "5") String limit) {
+                                           @RequestParam(required = false) String categoryLevel3, HttpServletResponse response, @RequestParam(defaultValue = "1") String page, @RequestParam(required = false, defaultValue = "5") String limit) {
         AppInfo appinfo = new AppInfo();
+        System.out.println(getBackId());
         appinfo.setSoftwareName(softwareName);
         appinfo.setStatus(status == null || status.equals("") ? null : Integer.parseInt(status));
         appinfo.setFlatformId(flatformId == null || flatformId.equals("") ? null : Integer.parseInt(flatformId));
         appinfo.setCategoryLevel1(categoryLevel1 == null || categoryLevel1.equals("") ? null : Integer.parseInt(categoryLevel1));
         appinfo.setCategoryLevel2(categoryLevel2 == null || categoryLevel2.equals("") ? null : Integer.parseInt(categoryLevel2));
         appinfo.setCategoryLevel3(categoryLevel3 == null || categoryLevel3.equals("") ? null : Integer.parseInt(categoryLevel3));
-//        appinfo.setDevId(((DevUser)request.getSession().getAttribute("du"))==null?((BackendUser)request.getSession().getAttribute("bu")).getId():((DevUser)request.getSession().getAttribute("du")).getId());
-        appinfo.setDevId(1);
+
         //获取条件
         TableData<AppInfo> data = new TableData<AppInfo>();
         data.setCount(appInfoService.count(appinfo));
@@ -123,7 +127,7 @@ public class AppinfoBackController {
         if (versionId != null) {
             map.put("version", appVersionService.getVersionByid(Integer.parseInt(versionId)));
         }
-        return reload()==null? Result.ok(map):Result.ok(map, reload());
+        return reload() == null ? Result.ok(map) : Result.ok(map, reload());
     }
 
     /**
@@ -138,7 +142,7 @@ public class AppinfoBackController {
     public Result setStatus(String id, String status) {
         Map<String, String> map = new HashMap<String, String>();
         map.put("result", appInfoService.setStatus(Integer.parseInt(id), Integer.parseInt(status)) > 0 ? "success" : "lose");
-        return reload()==null? Result.ok(map):Result.ok(map, reload());
+        return reload() == null ? Result.ok(map) : Result.ok(map, reload());
     }
 
 

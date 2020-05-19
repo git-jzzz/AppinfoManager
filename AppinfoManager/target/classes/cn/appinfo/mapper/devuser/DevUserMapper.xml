@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.appinfo.mapper.devuser.DevUserMapper">
+
+	<!-- 开发者用户登录查询 -->
+	<select id="login" resultType="DevUser" parameterType="DevUser">
+		select * from dev_user where devCode=#{devCode} and devPassword=#{devPassword}
+	</select>
+</mapper>

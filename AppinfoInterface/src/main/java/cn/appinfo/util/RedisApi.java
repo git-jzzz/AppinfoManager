@@ -10,17 +10,18 @@ public class RedisApi {
     private JedisPool jedisPool;
 
     /*获取jedis*/
-   private Jedis getJedis() {
-      return jedisPool.getResource();
-   }
+    private Jedis getJedis() {
+        return jedisPool.getResource();
+    }
 
-   /*释放jedis*/
+    /*释放jedis*/
     private void closeJedis(Jedis jedis) {
         jedisPool.returnResource(jedis);
     }
 
     /**
      * 依据key获取数据
+     *
      * @param key
      * @return
      */
@@ -33,6 +34,7 @@ public class RedisApi {
 
     /**
      * 存值
+     *
      * @param key
      * @param value
      * @return
@@ -46,6 +48,7 @@ public class RedisApi {
 
     /**
      * 存值 设置有效时间
+     *
      * @param key
      * @param seconds
      * @param value
@@ -60,6 +63,7 @@ public class RedisApi {
 
     /**
      * 查询是否存在
+     *
      * @param key
      * @return
      */
@@ -72,6 +76,7 @@ public class RedisApi {
 
     /**
      * 查询 key的有效时间
+     *
      * @param key
      * @return
      */
@@ -84,6 +89,7 @@ public class RedisApi {
 
     /**
      * 删除key
+     *
      * @param key
      * @return
      */

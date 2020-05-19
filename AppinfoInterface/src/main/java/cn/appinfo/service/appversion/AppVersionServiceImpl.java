@@ -12,69 +12,69 @@ import javax.annotation.Resource;
 
 @Service("appVersionService")
 public class AppVersionServiceImpl implements AppVersionService {
-	
-	@Resource
-	private AppVersionMapper appVersionMapper;
-	
 
-	public void setAppVersionMapper(AppVersionMapper appVersionMapper) {
-		this.appVersionMapper = appVersionMapper;
-	}
+    @Resource
+    private AppVersionMapper appVersionMapper;
 
 
-	@Override
-	public List<AppVersion> getVlist(Integer appId) {
-		// TODO Auto-generated method stub
-		return appVersionMapper.getVlist(appId);
-	}
+    public void setAppVersionMapper(AppVersionMapper appVersionMapper) {
+        this.appVersionMapper = appVersionMapper;
+    }
 
 
-	@Override
-	public int addVersion(AppVersion appVersion) {
-		// TODO Auto-generated method stub
-		return appVersionMapper.addVersion(appVersion);
-	}
+    @Override
+    public List<AppVersion> getVlist(Integer appId) {
+        // TODO Auto-generated method stub
+        return appVersionMapper.getVlist(appId);
+    }
 
 
-	@Override
-	public int findMaxVersionid(Integer appId) {
-		// TODO Auto-generated method stub
-		return appVersionMapper.findMaxVersionid(appId);
-	}
+    @Override
+    public int addVersion(AppVersion appVersion) {
+        // TODO Auto-generated method stub
+        return appVersionMapper.addVersion(appVersion);
+    }
 
 
-	@Override
-	public AppVersion getVersionByid(Integer id) {
-		// TODO Auto-generated method stub
-		return appVersionMapper.getVersionByid(id);
-	}
+    @Override
+    public int findMaxVersionid(Integer appId) {
+        // TODO Auto-generated method stub
+        return appVersionMapper.findMaxVersionid(appId);
+    }
 
 
-	@Override
-	public int updateVersion(AppVersion appVersion) {
-		// TODO Auto-generated method stub
-		return appVersionMapper.updateVersion(appVersion);
-	}
+    @Override
+    public AppVersion getVersionByid(Integer id) {
+        // TODO Auto-generated method stub
+        return appVersionMapper.getVersionByid(id);
+    }
 
 
-	@Override
-	public int deleteVersion(int appId) {
-		// TODO Auto-generated method stub
-		return appVersionMapper.deleteVersion(appId);
-	}
+    @Override
+    public int updateVersion(AppVersion appVersion) {
+        // TODO Auto-generated method stub
+        return appVersionMapper.updateVersion(appVersion);
+    }
 
 
-	@Override
-	public int selectCount(int appId) {
-		// TODO Auto-generated method stub
-		return appVersionMapper.selectCount(appId);
-	}
+    @Override
+    public int deleteVersion(int appId) {
+        // TODO Auto-generated method stub
+        return appVersionMapper.deleteVersion(appId);
+    }
 
 
-	@Override
-	public int delVersionsrc(int id) {
-		// TODO Auto-generated method stub
-		return appVersionMapper.delVersionsrc(id);
-	}
+    @Override
+    public int selectCount(int appId) {
+        // TODO Auto-generated method stub
+        return appVersionMapper.selectCount(appId);
+    }
+
+
+    @Override
+    public int delVersionsrc(int id) {
+        // TODO Auto-generated method stub
+        return appVersionMapper.delVersionsrc(id);
+    }
 
 }

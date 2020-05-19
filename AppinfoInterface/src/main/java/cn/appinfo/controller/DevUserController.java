@@ -48,10 +48,10 @@ public class DevUserController {
             try {
                 String token_dev = tokenService.generateToken(request.getHeader("user-agent"), devUser);
                 tokenService.save(token_dev, devUser);
-                    map.put("token_dev", token_dev);
+                map.put("token_dev", token_dev);
                 map.put("devUser", devUser);
             } catch (Exception e) {
-				return Result.error(e.getMessage());
+                return Result.error(e.getMessage());
             }
             return Result.ok(map);
         }
@@ -66,14 +66,14 @@ public class DevUserController {
     @RequestMapping(value = "/dploginout", method = RequestMethod.GET)
     @ResponseBody
     public Result loginOut(HttpServletRequest request) {
-		String token_dev=request.getHeader("token_dev");
-		try {
-			tokenService.validate(request.getHeader("user-agent"),token_dev);
-			long result=tokenService.delete(token_dev);
-			return Result.ok("","返回值:"+result);
-		} catch (Exception e) {
-			return Result.error(e.getMessage());
-		}
+        String token_dev = request.getHeader("token_dev");
+        try {
+            tokenService.validate(request.getHeader("user-agent"), token_dev);
+            long result = tokenService.delete(token_dev);
+            return Result.ok("", "返回值:" + result);
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
 
     }
 

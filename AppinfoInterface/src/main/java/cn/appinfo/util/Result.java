@@ -26,17 +26,19 @@ public class Result {
         result.setData(data);
         return result;
     }
-    public static Result ok(Object data,String msg) {
+
+    public static Result ok(Object data, String msg) {
         Result result = new Result();
         result.setCode("200");
         result.setMsg(msg);
         result.setData(data);
         return result;
     }
-    public static Result ok(Object data,Object token) {
+
+    public static Result ok(Object data, Object token) {
         Result result = new Result();
         result.setCode("200");
-       result.setToken(token);
+        result.setToken(token);
         result.setData(data);
         return result;
     }
@@ -56,6 +58,7 @@ public class Result {
         result.setData(null);
         return result;
     }
+
     public static Result errorToken(String msg) {
         Result result = new Result();
         result.setCode("801");

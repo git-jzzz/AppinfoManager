@@ -10,19 +10,19 @@ import javax.annotation.Resource;
 
 @Service("backendUserService")
 public class BackendUserServiceImpl implements BackendUserService {
-	
-	@Resource
-	private BackendUserMapper backendUserMapper;
 
-	public void setBackendUserMapper(BackendUserMapper backendUserMapper) {
-		this.backendUserMapper = backendUserMapper;
-	}
+    @Resource
+    private BackendUserMapper backendUserMapper;
 
-	@Override
-	public BackendUser bulogin(BackendUser backendUser) {
-		// TODO Auto-generated method stub
-		return backendUserMapper.bulogin(backendUser);
-	}
-	
-	
+    public void setBackendUserMapper(BackendUserMapper backendUserMapper) {
+        this.backendUserMapper = backendUserMapper;
+    }
+
+    @Override
+    public BackendUser bulogin(BackendUser backendUser) {
+        // TODO Auto-generated method stub
+        return backendUserMapper.bulogin(backendUser);
+    }
+
+
 }

@@ -10,20 +10,20 @@ import javax.annotation.Resource;
 
 @Service("devUserService")
 public class DevUserServiceImpl implements DevUserService {
-	
-	@Resource
-	private DevUserMapper devUserMapper;
-	
 
-	public void setDevUserMapper(DevUserMapper devUserMapper) {
-		this.devUserMapper = devUserMapper;
-	}
+    @Resource
+    private DevUserMapper devUserMapper;
 
 
-	@Override
-	public DevUser login(DevUser du) {
-		// TODO Auto-generated method stub
-		return devUserMapper.login(du);
-	}
+    public void setDevUserMapper(DevUserMapper devUserMapper) {
+        this.devUserMapper = devUserMapper;
+    }
+
+
+    @Override
+    public DevUser login(DevUser du) {
+        // TODO Auto-generated method stub
+        return devUserMapper.login(du);
+    }
 
 }
