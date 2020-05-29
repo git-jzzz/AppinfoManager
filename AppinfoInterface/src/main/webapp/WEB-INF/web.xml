@@ -7,7 +7,6 @@
 
   <display-name>Archetype Created Web Application</display-name>
 
-
   <!--配置监听器，用于项目启动就扫描指定路径配置文件-->
   <context-param>
     <param-name>contextConfigLocation</param-name><!--属性名-->

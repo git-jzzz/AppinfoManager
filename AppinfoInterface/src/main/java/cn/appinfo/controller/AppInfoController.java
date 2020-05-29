@@ -64,7 +64,7 @@ public class AppInfoController {
     }
 
     public Integer getDevId() {
-        return Integer.parseInt(request.getHeader("token_dev").split("-")[2]);
+            return Integer.parseInt(request.getHeader("token_dev").split("-")[2]);
     }
 
 
